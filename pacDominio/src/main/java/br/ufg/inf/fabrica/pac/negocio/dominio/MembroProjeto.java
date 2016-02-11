@@ -4,7 +4,7 @@ package br.ufg.inf.fabrica.pac.negocio.dominio;
  *
  * @author Danillo
  */
-public class MembroEquipe {
+public class MembroProjeto {
     private long idUsuario;
     private long idProjeto;
     private long idPapel;
