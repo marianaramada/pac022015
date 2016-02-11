@@ -20,9 +20,7 @@ create table PROJETO(
 create table USUARIO(
     id INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL,
-    idProjeto INTEGER NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (idProjeto) REFERENCES PROJETO(id)
+    PRIMARY KEY (id)
 );
 
 create table PACOTE(
@@ -55,3 +53,13 @@ create table ANDAMENTO(
     FOREIGN KEY (idEstado) REFERENCES ESTADO(id),
     FOREIGN KEY (idUsuario) REFERENCES USUARIO(id)
 );
+
+create table MEMBRO_PROJETO(
+    id_usuario INTEGER NOT NULL,
+    id_projeto INTEGER NOT NULL,
+    papel VARCHAR(100) NOT NULL,
+    PRIMARY KEY (id_usuario, id_projeto, papel),
+    FOREIGN KEY (id_usuario) REFERENCES USUARIO(id),
+    FOREIGN KEY (id_projeto) REFERENCES PROJETO(id)
+);
+
