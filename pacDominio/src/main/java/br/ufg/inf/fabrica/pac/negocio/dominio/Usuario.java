@@ -73,4 +73,8 @@ public class Usuario {
     public long getId() {
         return this.id;
     }
+
+    public boolean isGPP() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
