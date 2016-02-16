@@ -7,12 +7,13 @@ package br.ufg.inf.fabrica.pac.negocio.dominio;
 public class MembroProjeto {
     private long idUsuario;
     private long idProjeto;
-    private long idPapel;
+    private String papel;
+    private String nome;
     
     //Transient
     private Usuario usuario;
     private Projeto projeto;
-    private Papel papel;
+    
 
     public long getIdUsuario() {
         return idUsuario;
@@ -28,14 +29,6 @@ public class MembroProjeto {
 
     public void setIdProjeto(long idProjeto) {
         this.idProjeto = idProjeto;
-    }
-
-    public long getIdPapel() {
-        return idPapel;
-    }
-
-    public void setIdPapel(long idPapel) {
-        this.idPapel = idPapel;
     }
 
     public Usuario getUsuario() {
@@ -54,11 +47,21 @@ public class MembroProjeto {
         this.projeto = projeto;
     }
 
-    public Papel getPapel() {
+    public String getPapel() {
         return papel;
     }
 
-    public void setPapel(Papel papel) {
+    public void setPapel(String papel) {
         this.papel = papel;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    
 }

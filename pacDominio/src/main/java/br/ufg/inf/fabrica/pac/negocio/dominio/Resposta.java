@@ -8,16 +8,16 @@ import java.util.List;
  * @param <Chave>
  */
 public class Resposta <Chave> {
-    private Chave chave;
+    private Chave value;
     private final List<String> laudo = new ArrayList<>();
     private boolean sucesso = true;
     
-    public Chave getChave() {
-        return chave;
+    public Chave getValue() {
+        return value;
     }
 
-    public void setChave(Chave chave) {
-        this.chave = chave;
+    public void setValue(Chave value) {
+        this.value = value;
     }
 
     public List<String> getLaudo() {

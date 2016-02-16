@@ -5,7 +5,6 @@ import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -14,12 +13,20 @@ import java.util.Map;
 public interface IGestorMembros {
     
     /**
+     *
+     * @param autor
+     * @param projeto
+     * @return
+     */
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto);
+    
+    /**
      * 
      * @param autor
      * @param projeto
      * @return 
      */
-    public Resposta<List<Usuario>> buscarUsuarios(Usuario autor, Projeto projeto);
+    public Resposta<List<MembroProjeto>> buscarMembros(Usuario autor, Projeto projeto);
     
     /**
      * 
