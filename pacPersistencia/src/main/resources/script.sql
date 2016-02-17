@@ -1,3 +1,12 @@
+drop table MEMBRO_PROJETO;
+drop table ANDAMENTO;
+drop table PACOTE;
+drop table ESTADO;
+drop table PROJETO;
+drop table USUARIO;
+
+
+
 create table ESTADO(
     id INTEGER NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
     nome VARCHAR(50) NOT NULL,
@@ -20,6 +29,8 @@ create table PROJETO(
 create table USUARIO(
     id INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
     PRIMARY KEY (id)
 );
 
