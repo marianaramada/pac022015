@@ -7,8 +7,8 @@ package br.ufg.inf.fabrica.pac.negocio.imp;
 
 import br.ufg.inf.fabrica.pac.negocio.AutenticacaoException;
 import br.ufg.inf.fabrica.pac.negocio.IAutenticador;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
-import br.ufg.inf.fabrica.pac.negocio.utils.Utils;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.utils.Utils;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoUsuario;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoUsuario;
 import br.ufg.inf.fabrica.pac.seguranca.ILdapAutenticador;

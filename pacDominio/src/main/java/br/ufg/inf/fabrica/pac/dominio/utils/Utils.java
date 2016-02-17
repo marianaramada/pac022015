@@ -1,4 +1,4 @@
-package br.ufg.inf.fabrica.pac.negocio.utils;
+package br.ufg.inf.fabrica.pac.dominio.utils;
 
 /**
  *

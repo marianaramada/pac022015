@@ -1,6 +1,6 @@
 package br.ufg.inf.fabrica.pac.persistencia;
 
-import br.ufg.inf.fabrica.pac.negocio.dominio.Estado;
+import br.ufg.inf.fabrica.pac.dominio.Estado;
 
 /**
  *

@@ -1,6 +1,6 @@
 package br.ufg.inf.fabrica.pac.persistencia.imp;
 
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoUsuario;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,4 +1,4 @@
-package br.ufg.inf.fabrica.pac.negocio.dominio;
+package br.ufg.inf.fabrica.pac.dominio;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ public class Usuario {
 
     //Id não é gerado automaticamente, ele é gerado pelo ldap
     private long id;
-    private List<Projeto> projetos;
     private boolean ativo;
 
     //Transient
@@ -35,14 +34,6 @@ public class Usuario {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public List<Projeto> getProjetos() {
-        return projetos;
-    }
-
-    public void setProjetos(List<Projeto> projetos) {
-        this.projetos = projetos;
     }
 
     public String getLogin() {
@@ -86,6 +77,10 @@ public class Usuario {
     }
 
     public boolean isGPP() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public boolean isGPR() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

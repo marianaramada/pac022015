@@ -5,10 +5,10 @@
  */
 package br.ufg.inf.fabrica.pac.negocio;
 
-import br.ufg.inf.fabrica.pac.negocio.dominio.Pacote;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.Pacote;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Resposta;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 
 /**
  *

@@ -1,10 +1,10 @@
 package br.ufg.inf.fabrica.pac.persistencia.stub;
 
-import br.ufg.inf.fabrica.pac.negocio.dominio.Andamento;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Estado;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Pacote;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.Andamento;
+import br.ufg.inf.fabrica.pac.dominio.Estado;
+import br.ufg.inf.fabrica.pac.dominio.Pacote;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoAndamento;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoEstado;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoPacote;
@@ -92,7 +92,8 @@ public class RepositorioStub {
             andamento.setDescricao("Criação do pacote");
             andamento.setIdEstado(estadoNovo.getId());
             andamento.setIdPacote(pacoteAtribuido.getId());
-            andamento.setIdUsuario(gerente.getId());
+            andamento.setIdUsuarioRemetente(gerente.getId());
+            andamento.setIdUsuarioDestinatario(membro.getId());
             pacoteAtribuido.getAndamentos().add(andamento.getId());
             daoAndamento.salvar(andamento);
             //Distribuido
@@ -102,7 +103,7 @@ public class RepositorioStub {
             andamento.setDescricao("Distribuicao do pacote");
             andamento.setIdEstado(estadoAtribuido.getId());
             andamento.setIdPacote(pacoteAtribuido.getId());
-            andamento.setIdUsuario(membro.getId());
+            andamento.setIdUsuarioRemetente(membro.getId());
             pacoteAtribuido.getAndamentos().add(andamento.getId());
             daoAndamento.salvar(andamento);
         
@@ -123,7 +124,8 @@ public class RepositorioStub {
             andamento.setDescricao("Criação do pacote");
             andamento.setIdEstado(estadoNovo.getId());
             andamento.setIdPacote(pacoteContratado.getId());
-            andamento.setIdUsuario(gerente.getId());
+            andamento.setIdUsuarioRemetente(gerente.getId());
+            andamento.setIdUsuarioDestinatario(membro.getId());
             pacoteAtribuido.getAndamentos().add(andamento.getId());
             daoAndamento.salvar(andamento);
             //Distribuido
@@ -133,7 +135,7 @@ public class RepositorioStub {
             andamento.setDescricao("Distribuicao do pacote");
             andamento.setIdEstado(estadoAtribuido.getId());
             andamento.setIdPacote(pacoteContratado.getId());
-            andamento.setIdUsuario(membro.getId());
+            andamento.setIdUsuarioRemetente(membro.getId());
             pacoteAtribuido.getAndamentos().add(andamento.getId());
             daoAndamento.salvar(andamento);
             //Contratado
@@ -143,7 +145,8 @@ public class RepositorioStub {
             andamento.setDataPrevistaConclusao(new Date());
             andamento.setIdEstado(estadoContratado.getId());
             andamento.setIdPacote(pacoteContratado.getId());
-            andamento.setIdUsuario(membro.getId());
+            andamento.setIdUsuarioRemetente(gerente.getId());
+            andamento.setIdUsuarioDestinatario(membro.getId());            
             pacoteAtribuido.getAndamentos().add(andamento.getId());
             daoAndamento.salvar(andamento);
     }

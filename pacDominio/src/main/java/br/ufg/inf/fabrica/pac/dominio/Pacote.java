@@ -1,4 +1,4 @@
-package br.ufg.inf.fabrica.pac.negocio.dominio;
+package br.ufg.inf.fabrica.pac.dominio;
 
 /**
  * Foi definido que: 1 - Toda entidade possui um único atributo identificador,

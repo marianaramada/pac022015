@@ -1,10 +1,10 @@
 package br.ufg.inf.fabrica.pac.negocio.imp;
  
 import br.ufg.inf.fabrica.pac.negocio.IGestorMembros;
-import br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.MembroProjeto;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Resposta;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;

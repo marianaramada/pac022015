@@ -6,12 +6,12 @@
 package br.ufg.inf.fabrica.pac.view.servlets;
 
 import br.ufg.inf.fabrica.pac.negocio.ICriarPacote;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Pacote;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.Pacote;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Resposta;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.negocio.imp.CriarPacote;
-import br.ufg.inf.fabrica.pac.negocio.utils.FileService;
+import br.ufg.inf.fabrica.pac.dominio.utils.FileService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -68,7 +68,7 @@ public class CriarPacoteServlet extends HttpServlet {
             Pacote pacote = new Pacote();
             pacote.setNome(request.getParameter("nomePacote"));
             pacote.setDescricao(request.getParameter("descricaoPacote"));
-            if (request.getParameter("abandonado").equalsIgnoreCase("on") && request.getParameter("abandonado") != null) {
+            if (request.getParameter("abandonado") != null && request.getParameter("abandonado").equalsIgnoreCase("on") ) {
                 pacote.setAbandonado(true);
             } else {
                 pacote.setAbandonado(false);
@@ -88,6 +88,7 @@ public class CriarPacoteServlet extends HttpServlet {
             Usuario usuarioLogado = null;
 
             usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
+            
             Projeto projetoSelecionado = new Projeto();
             projetoSelecionado.setId(1);
 //            projetoSelecionado = (Projeto) request.getSession().getAttribute("projetoSelecionado");
