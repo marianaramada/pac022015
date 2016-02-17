@@ -12,12 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        
-        Usuario <b> '${usuario.nome}' </b>  - Email: <b> ${usuario.email} </b> logado com sucesso
-        
+
+        Usuario <b> '${usuarioLogado.nome}' </b>  - Email: <b> ${usuarioLogado.email} </b> logado com sucesso
+
         <h1>Pacotes atribuidos</h1>
         <form action="ManipuladorDePacote" method="post">
             <input type="submit" value="Visualizar detalhes"/>
+            <input type="button" value="Criar Pacotes" onclick="window.open('criarPacote.jsp')"/>
         </form>
+
     </body>
 </html>

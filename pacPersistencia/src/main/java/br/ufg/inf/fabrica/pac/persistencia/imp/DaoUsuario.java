@@ -53,7 +53,7 @@ public class DaoUsuario implements IDaoUsuario{
 
     @Override
     public Usuario buscar(long id) {
-        String sql = "select e.* from USUARIO where id=?";
+        String sql = "select U.* from USUARIO as U where id=?";
         try {
             PreparedStatement pst;
             pst = Conexao.getConnection().prepareStatement(sql);

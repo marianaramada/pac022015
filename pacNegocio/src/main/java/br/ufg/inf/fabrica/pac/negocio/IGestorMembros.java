@@ -5,7 +5,6 @@ import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
 import java.util.List;
-import java.util.Map;
 
 /**
  *

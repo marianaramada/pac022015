@@ -76,7 +76,7 @@ public class DaoPacote implements IDaoPacote{
 
     @Override
     public Pacote buscar(long id) {
-        String sql = "select e.* from PACOTE where id=?";
+        String sql = "select P.* from PACOTE as P where id=?";
         try {
             PreparedStatement pst;
             pst = Conexao.getConnection().prepareStatement(sql);

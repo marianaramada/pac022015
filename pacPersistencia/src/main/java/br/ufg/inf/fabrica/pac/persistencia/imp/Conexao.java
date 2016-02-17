@@ -10,11 +10,11 @@ import java.sql.SQLException;
  */
 public class Conexao {
 
-    public static Connection getConnection() throws SQLException{
-        String dbUrl = "jdbc:derby://localhost:1527/pac2015";
-        String user  = "pac";
+    public static Connection getConnection() throws SQLException {
+        String dbUrl = "jdbc:mysql://localhost:3306/PAC2015?zeroDateTimeBehavior=convertToNull";
+        String user = "pac";
         String senha = "pac";
-        
+        DriverManager.registerDriver(new com.mysql.jdbc.Driver());
         return DriverManager.getConnection(dbUrl, user, senha);
     }
 }

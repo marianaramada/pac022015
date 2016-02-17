@@ -1,5 +1,7 @@
 package br.ufg.inf.fabrica.pac.negocio.dominio;
 
+import java.util.List;
+
 /**
  *
  * @author danilloguimaraes
@@ -8,6 +10,7 @@ public class Usuario {
 
     //Id não é gerado automaticamente, ele é gerado pelo ldap
     private long id;
+    private List<Projeto> projetos;
     private boolean ativo;
 
     //Transient
@@ -20,10 +23,26 @@ public class Usuario {
 
     }
 
-    public Usuario(String login, String nome, String email) {
-        this.login = login;
+    public Usuario(long id, String nome, String email) {
+        this.id = id;
         this.nome = nome;
         this.email = email;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public List<Projeto> getProjetos() {
+        return projetos;
+    }
+
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
     }
 
     public String getLogin() {
@@ -64,14 +83,6 @@ public class Usuario {
 
     public void setAtivo(boolean value) {
         this.ativo = value;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getId() {
-        return this.id;
     }
 
     public boolean isGPP() {
