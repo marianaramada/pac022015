@@ -73,8 +73,4 @@ public class Usuario {
     public long getId() {
         return this.id;
     }
-
-    public boolean isGPP() {
-        return true;
-    }
 }

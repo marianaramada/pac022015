@@ -5,6 +5,7 @@ import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.util.Util;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,13 +48,14 @@ public class DaoMembroProjetoImpl implements IDaoMembroProjeto {
     }
 
     @Override
-    public Resposta<List<Usuario>> buscarUsuariosNaoMembrosPorProjeto(long idProjeto) {
-        String sql = "select u.* from USUARIO u where u.ID not in (select m.IDUSUARIO from MEMBRO_PROJETO m where m.IDPROJETO = ?)";
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembrosPorProjeto(long idProjeto, String usuarioPesquisado) {
+        String sql = "select u.* from Usuario u where u.nome like ? and u.id not in (select m.idUsuario from Membro_Projeto m where m.idProjeto = ?)";
         Resposta resposta = new Resposta();
         try {
             PreparedStatement pst;
             pst = Conexao.getConnection().prepareStatement(sql);
-            pst.setLong(1, idProjeto);
+            pst.setString(1, usuarioPesquisado + "%");
+            pst.setLong(2, idProjeto); 
             ResultSet rs = pst.executeQuery();
             List<Usuario> usuarios = new ArrayList();
             while(rs.next()){
@@ -93,6 +95,29 @@ public class DaoMembroProjetoImpl implements IDaoMembroProjeto {
             resposta.addItemLaudo(ex.getMessage());
         }
         return resposta;
+    }
+
+    @Override
+    public List<MembroProjeto> adicionarMembrosProjeto(List<MembroProjeto> membros) throws SQLException {
+        Connection con = null;
+        try {
+            String sql = "insert into MEMBRO_PROJETO (IDUSUARIO, IDPROJETO, PAPEL) values (?, ?, ?)";
+            
+            con = Conexao.getConnection();
+            PreparedStatement pst;
+            pst = Conexao.getConnection().prepareStatement(sql);
+            for (MembroProjeto membro : membros) {
+                pst.setLong(1, membro.getIdUsuario());
+                pst.setLong(2, membro.getIdProjeto());
+                pst.setString(3, membro.getPapel());
+                pst.execute();
+            }
+            con.commit();
+        } finally{
+            if(!con.isClosed())
+                con.close();
+        }
+        return null;
     }
 
 }

@@ -7,46 +7,71 @@ import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoMembroProjetoImpl;
-import br.ufg.inf.fabrica.pac.persistencia.imp.DaoUsuario;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class GestorMembrosImpl implements IGestorMembros {
 
     @Override
-    public Resposta<MembroProjeto> adicionarMembroProjeto(Usuario autor, MembroProjeto membro) {
+    public Resposta<MembroProjeto> adicionarMembroProjeto(Usuario autor, 
+            MembroProjeto membro) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Resposta<MembroProjeto> removerMembroProjeto(Usuario autor, MembroProjeto membro) {
+    public Resposta<MembroProjeto> removerMembroProjeto(Usuario autor, 
+            MembroProjeto membro) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto) {
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, 
+            Projeto projeto, String usuarioPesquisado){
         Resposta<List<Usuario>> resposta = new Resposta();
-        if(!autor.isGPP())
-            resposta.addItemLaudo("Usuário não possui papel de Gerente de Portifólio");
         if(projeto==null)
             resposta.addItemLaudo("Projeto não informado");
+        if(usuarioPesquisado==null)
+            usuarioPesquisado="";
         IDaoMembroProjeto dao = new DaoMembroProjetoImpl();
-        List<Usuario> usuarios = dao.buscarUsuariosNaoMembrosPorProjeto(projeto.getId()).getValue();
+        List<Usuario> usuarios;
+        usuarios = dao.buscarUsuariosNaoMembrosPorProjeto(projeto.getId(), usuarioPesquisado).getValue();
         resposta.setValue(usuarios);
         return resposta;
     }
 
     @Override
-    public Resposta<List<MembroProjeto>> buscarMembros(Usuario autor, Projeto projeto) {
+    public Resposta<List<MembroProjeto>> buscarMembros(Usuario autor, 
+            Projeto projeto) {
         Resposta<List<MembroProjeto>> resposta = new Resposta();
-        if(!autor.isGPP())
-            resposta.addItemLaudo("Usuário não possui papel de Gerente de Portifólio");
         if(projeto==null)
             resposta.addItemLaudo("Projeto não informado");
         IDaoMembroProjeto dao = new DaoMembroProjetoImpl();
         List<MembroProjeto> membros = dao.buscarMembrosPorProjeto(projeto.getId()).getValue();
         resposta.setValue(membros);
+        return resposta;
+    }
+
+    @Override
+    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(
+            Usuario usuarioLogado, List<MembroProjeto> membros){
+        Resposta<List<MembroProjeto>> resposta = new Resposta<>();
+        for (MembroProjeto membro : membros) {
+            if(membro.getIdProjeto()<=0)
+                resposta.addItemLaudo("Informe o projeto do membro");
+            if(membro.getIdUsuario()<=0)
+                resposta.addItemLaudo("Informe o usuário do membro");
+            if(membro.getPapel()==null || membro.getPapel().isEmpty())
+                resposta.addItemLaudo("Informe o papel do membro");
+        }
+        IDaoMembroProjeto dao = new DaoMembroProjetoImpl();
+        try {
+            resposta.setValue(dao.adicionarMembrosProjeto(membros));
+        } catch (SQLException ex) {
+            Logger.getLogger(GestorMembrosImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return resposta;
     }
     

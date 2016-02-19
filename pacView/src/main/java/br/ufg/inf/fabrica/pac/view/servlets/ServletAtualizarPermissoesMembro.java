@@ -1,14 +1,13 @@
+
 package br.ufg.inf.fabrica.pac.view.servlets;
 
-import br.ufg.inf.fabrica.pac.negocio.IGestorMembros;
 import br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
-import br.ufg.inf.fabrica.pac.negocio.imp.GestorMembrosImpl;
+import br.ufg.inf.fabrica.pac.view.apoio.UsuarioView;
+import br.ufg.inf.fabrica.pac.view.servlets.beans.BeanAtribuirEquipe;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Danillo
  */
-@WebServlet(name = "ServletListarUsuariosEMembros", urlPatterns = {"/listarUsuariosEMembros"})
-public class ServletListarUsuariosEMembros extends HttpServlet {
+@WebServlet(name = "BeanAtualizarPermissoesMembro", urlPatterns = {"/atualizarPermissoesMembro"})
+public class ServletAtualizarPermissoesMembro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,9 +33,59 @@ public class ServletListarUsuariosEMembros extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
-        for (String nome : request.getParameterMap().keySet()) {
-            System.out.println(nome);
+        
+        BeanAtribuirEquipe bean = (BeanAtribuirEquipe) request.getSession().
+                getAttribute("beanAtribuir");
+        int idUsuarioEmAlteracao = bean.getUsuarioEmAlteracao();
+        Projeto projetoSelecionado = bean.getProjetoSelecionado();
+        
+        
+        List<String> novosPapeis;
+        
+        if(request.getParameterValues("papeis")==null){
+            novosPapeis = new ArrayList<>();
+        } else {
+            novosPapeis = Arrays.asList(request.getParameterValues("papeis"));
+        }
+        
+        List<MembroProjeto> papeisAntigos = null;
+        
+        //Busca a lista de membros ja carregas no bean e encontra o objeto do 
+        // respectivo usuario
+        List<UsuarioView> listaDeMembrosDeProjeto = bean.getUsuarios();
+        for (UsuarioView usuarioView : listaDeMembrosDeProjeto) {
+            if(usuarioView.getId()==idUsuarioEmAlteracao){
+                papeisAntigos = usuarioView.getMembros();
+                break;
+            }
+        }
+        
+        //Busca os papéis para remoção
+        List<MembroProjeto> papeisRemovidos = new ArrayList<>();
+        for (MembroProjeto papelAntigo : papeisAntigos) {
+            if(!novosPapeis.contains(papelAntigo.getPapel()))
+                papeisRemovidos.add(papelAntigo);
+        }
+        
+        //Busca os papéis para adição
+        List<MembroProjeto> papeisAdicionados = new ArrayList<>();
+        for (String novoPapel : novosPapeis) {
+            boolean naoExistia = true;
+            for (MembroProjeto membro : papeisAntigos) {
+                if(novoPapel.equals(membro.getPapel())){
+                    naoExistia = false;
+                    break;
+                }
+            }
+            if(naoExistia){
+                MembroProjeto membro = new MembroProjeto();
+                membro.setIdProjeto(projetoSelecionado.getId());
+                membro.setIdUsuario(idUsuarioEmAlteracao);
+                membro.setPapel(novoPapel);
+                papeisAdicionados.add(membro);
+            }
         }
         request.getRequestDispatcher("atribuirEquipe.jsp").forward(request, response);
     }

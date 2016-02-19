@@ -18,7 +18,7 @@ public interface IGestorMembros {
      * @param projeto
      * @return
      */
-    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto);
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto, String usuarioPesquisado);
     
     /**
      * 
@@ -43,4 +43,11 @@ public interface IGestorMembros {
      * @return 
      */
     public Resposta<MembroProjeto> removerMembroProjeto(Usuario autor, MembroProjeto membro);
+
+    /**
+     * 
+     * @param usuarioLogado
+     * @param membros 
+     */
+    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(Usuario usuarioLogado, List<MembroProjeto> membros);
 }
