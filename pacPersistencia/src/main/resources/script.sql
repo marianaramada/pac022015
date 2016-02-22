@@ -1,3 +1,4 @@
+
 drop table MEMBRO_PROJETO;
 drop table ANDAMENTO;
 drop table PACOTE;

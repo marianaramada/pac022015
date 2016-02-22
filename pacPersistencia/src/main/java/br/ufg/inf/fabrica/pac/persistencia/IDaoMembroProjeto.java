@@ -18,9 +18,32 @@ public interface IDaoMembroProjeto {
      * @param usuarioPesquisado
      * @return
      */
-    public Resposta<List<Usuario>> buscarUsuariosNaoMembrosPorProjeto(long idProjeto, String usuarioPesquisado);
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembrosPorProjeto(
+            long idProjeto, String usuarioPesquisado);
     
-    public Resposta<List<MembroProjeto>> buscarMembrosPorProjeto(long idProjeto);
+    /**
+     *
+     * @param idProjeto
+     * @return
+     */
+    public Resposta<List<MembroProjeto>> buscarMembrosPorProjeto(
+            long idProjeto);
 
-    public List<MembroProjeto> adicionarMembrosProjeto(List<MembroProjeto> membros) throws SQLException;
+    /**
+     *
+     * @param membros
+     * @return
+     * @throws SQLException
+     */
+    public List<MembroProjeto> adicionarMembrosProjeto(
+            List<MembroProjeto> membros) throws SQLException;
+
+    /**
+     *
+     * @param papeisRemovidos
+     * @param papeisAdicionados
+     */
+    public void atualizarPapeisDeUsuarioEmUmProjeto (
+            List<MembroProjeto> papeisRemovidos, 
+            List<MembroProjeto> papeisAdicionados) throws SQLException;
 }

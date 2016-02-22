@@ -46,8 +46,19 @@ public interface IGestorMembros {
 
     /**
      * 
-     * @param usuarioLogado
+     * @param autor
      * @param membros 
+     * @return  
      */
-    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(Usuario usuarioLogado, List<MembroProjeto> membros);
+    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(Usuario autor, List<MembroProjeto> membros);
+
+    /**
+     * 
+     * @param autor
+     * @param papeisRemovidos
+     * @param papeisAdicionados
+     * @return 
+     */
+    public Resposta<String> atualizarPapeisDeUsuarioEmUmProjeto(Usuario autor, 
+            List<MembroProjeto> papeisRemovidos, List<MembroProjeto> papeisAdicionados);
 }

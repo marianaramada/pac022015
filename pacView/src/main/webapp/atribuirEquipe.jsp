@@ -82,8 +82,8 @@
                         <input type="checkbox" value="GPR" name="papeis"
                                id="papelGPR"/>
                         <br>
-                        <label for="papelMGG">MGG</label>
-                        <input type="checkbox" value="MGG" name="papeis"
+                        <label for="papelMGG">MEG</label>
+                        <input type="checkbox" value="MEG" name="papeis"
                                id="papelMGG"/>
                         <br>
                         <label for="papelGPR">GPR</label>

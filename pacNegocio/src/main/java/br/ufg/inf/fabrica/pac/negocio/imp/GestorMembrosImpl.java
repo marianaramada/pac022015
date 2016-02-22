@@ -56,7 +56,7 @@ public class GestorMembrosImpl implements IGestorMembros {
 
     @Override
     public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(
-            Usuario usuarioLogado, List<MembroProjeto> membros){
+            Usuario autor, List<MembroProjeto> membros){
         Resposta<List<MembroProjeto>> resposta = new Resposta<>();
         for (MembroProjeto membro : membros) {
             if(membro.getIdProjeto()<=0)
@@ -74,5 +74,48 @@ public class GestorMembrosImpl implements IGestorMembros {
         }
         return resposta;
     }
-    
+
+    @Override
+    public Resposta<String> atualizarPapeisDeUsuarioEmUmProjeto(Usuario autor, 
+            List<MembroProjeto> papeisRemovidos, List<MembroProjeto> papeisAdicionados){
+        Resposta<String> resposta = new Resposta<>();
+        if( autor==null || autor.getId()==0)
+            resposta.addItemLaudo("Informe autor da solicitação"); 
+        
+        if((papeisRemovidos==null || papeisRemovidos.isEmpty())&&
+                ((papeisAdicionados==null)||papeisAdicionados.isEmpty())){
+            resposta.addItemLaudo("Nenhum papel foi informado para atualização");
+            return resposta;
+        }
+        long idUsuario = 0;
+        long idProjeto = 0;
+        for (MembroProjeto papelRemovido : papeisRemovidos) {
+            if(idUsuario==0)
+                idUsuario = papelRemovido.getIdUsuario();
+            if(idProjeto==0)
+                idProjeto = papelRemovido.getIdProjeto();
+            if(idUsuario!=papelRemovido.getIdUsuario())
+                resposta.addItemLaudo("A atualização deve conter papéis de somente um usuário em somente um projeto");
+        }
+        for (MembroProjeto papelAdicionado : papeisAdicionados) {
+            if(idUsuario==0)
+                idUsuario = papelAdicionado.getIdUsuario();
+            if(idProjeto==0)
+                idProjeto = papelAdicionado.getIdProjeto();
+            if(idUsuario!=papelAdicionado.getIdUsuario())
+                resposta.addItemLaudo("A atualização deve conter papéis de somente um usuário em somente um projeto");
+        }
+        if(resposta.isSucesso()){
+            IDaoMembroProjeto dao = new DaoMembroProjetoImpl();
+            try {
+                dao.atualizarPapeisDeUsuarioEmUmProjeto(papeisRemovidos, papeisAdicionados);
+            } catch (SQLException ex) {
+                Logger.getLogger(GestorMembrosImpl.class.getName()).log(Level.SEVERE, null, ex);
+                resposta.addItemLaudo("Falha no sistema");
+            }
+            return resposta;
+        } else {
+            return resposta;
+        }
+    }
 }

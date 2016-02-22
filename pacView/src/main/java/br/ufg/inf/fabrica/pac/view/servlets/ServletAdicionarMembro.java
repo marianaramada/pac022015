@@ -7,6 +7,7 @@ package br.ufg.inf.fabrica.pac.view.servlets;
 
 import br.ufg.inf.fabrica.pac.negocio.IGestorMembros;
 import br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto;
+import br.ufg.inf.fabrica.pac.negocio.dominio.Papel;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.negocio.imp.GestorMembrosImpl;
@@ -54,7 +55,14 @@ public class ServletAdicionarMembro extends HttpServlet {
                 membro.setIdProjeto(projetoSelecionado.getId());
                 membro.setIdUsuario(Integer.parseInt(usuario));
                 membro.setPapel(papel);
-                membros.add(membro);
+                //Somente adiciona se o papel informado estiver consistente
+                //com os papéis definidos no Enum Papel
+                try{
+                    Papel p = Papel.valueOf(papel);
+                    membros.add(membro);
+                }catch(IllegalArgumentException ex){
+                    
+                }
             }
         }
         

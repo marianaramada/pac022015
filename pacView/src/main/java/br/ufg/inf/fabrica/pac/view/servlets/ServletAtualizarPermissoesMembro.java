@@ -1,8 +1,11 @@
 
 package br.ufg.inf.fabrica.pac.view.servlets;
 
+import br.ufg.inf.fabrica.pac.negocio.IGestorMembros;
 import br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto;
 import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.negocio.imp.GestorMembrosImpl;
 import br.ufg.inf.fabrica.pac.view.apoio.UsuarioView;
 import br.ufg.inf.fabrica.pac.view.servlets.beans.BeanAtribuirEquipe;
 import java.io.IOException;
@@ -39,6 +42,7 @@ public class ServletAtualizarPermissoesMembro extends HttpServlet {
         BeanAtribuirEquipe bean = (BeanAtribuirEquipe) request.getSession().
                 getAttribute("beanAtribuir");
         int idUsuarioEmAlteracao = bean.getUsuarioEmAlteracao();
+        Usuario usuarioLogado = bean.getUsuarioLogado();
         Projeto projetoSelecionado = bean.getProjetoSelecionado();
         
         
@@ -87,6 +91,10 @@ public class ServletAtualizarPermissoesMembro extends HttpServlet {
                 papeisAdicionados.add(membro);
             }
         }
+        
+        IGestorMembros gestor = new GestorMembrosImpl();
+        gestor.atualizarPapeisDeUsuarioEmUmProjeto(usuarioLogado, papeisRemovidos, papeisAdicionados);
+        bean.setUsuarioEmAlteracao(0);
         request.getRequestDispatcher("atribuirEquipe.jsp").forward(request, response);
     }
 
