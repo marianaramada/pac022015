@@ -18,6 +18,8 @@ import br.ufg.inf.fabrica.pac.negocio.utils.UtilsNegocio;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoEstado;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoPacote;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,17 +51,21 @@ public class CriarPacote implements ICriarPacote {
             resp.addItemLaudo("Usuario logado não possui permissão para criar pacotes nesse projeto!");
             return resp;
         }
-        Date hoje = new Date();
-        hoje.setHours(0);
-        hoje.setMinutes(0);
-        hoje.setSeconds(0);
-        hoje.setTime(0);
+        
+        String hojeString = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        Date hoje = null;
+        try {
+            hoje = new SimpleDateFormat("dd/MM/yyyy").parse(hojeString);
+        } catch (ParseException ex) {
+            Logger.getLogger(CriarPacote.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                        
         if (pacoteTemCampoVazio(pacote)) {
             resp.setChave(null);
             resp.addItemLaudo("Pacote com campos vazios!");
             return resp;
         }
-        if (pacote.getDataPrevistaRealizacao().compareTo(hoje) < 0) {
+        if (hoje==null || pacote.getDataPrevistaRealizacao().compareTo(hoje) < 0) {
             resp.setChave(null);
             resp.addItemLaudo("Data Prevista Realização deve ser maior ou igual a data atual!");
             return resp;

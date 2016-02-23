@@ -46,12 +46,12 @@ public class FileService {
         return path;
     }
 
-    public String saveFile(Path destination, Part part) {
+    public String saveFile(String destination, Part part) {
 
         String fileName = getFileName(part);
-        String contentType = part.getContentType();
-
+        //String contentType = part.getContentType();        
         try {
+            
             fileName = destination + File.separator + fileName.replace("\"", "");
             part.write(fileName);
             return fileName;

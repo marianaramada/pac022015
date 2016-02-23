@@ -29,12 +29,12 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-        <!--Para exibição de retorno de list em jsp-->
+<!--        Para exibição de retorno de list em jsp
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
     

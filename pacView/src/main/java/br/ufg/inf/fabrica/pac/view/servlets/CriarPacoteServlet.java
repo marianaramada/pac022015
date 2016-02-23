@@ -25,7 +25,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 /**
  *
@@ -35,7 +34,8 @@ import javax.servlet.http.Part;
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
-        maxRequestSize = 1024 * 1024 * 10 // 10MB
+        maxRequestSize = 1024 * 1024 * 10,// 10MB
+        location = "C://"
 )
 public class CriarPacoteServlet extends HttpServlet {
 
@@ -48,7 +48,8 @@ public class CriarPacoteServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String BASE_DIR = "C:\\Users\\auf\\Desktop\\UploadsPAC";
+    private static final String BASE_DIR = "Users\\auf\\Desktop\\UploadsPAC";
+    private static final String DRIVE = "C:\\";
     Resposta<Pacote> resposta = new Resposta<Pacote>();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -68,7 +69,7 @@ public class CriarPacoteServlet extends HttpServlet {
             Pacote pacote = new Pacote();
             pacote.setNome(request.getParameter("nomePacote"));
             pacote.setDescricao(request.getParameter("descricaoPacote"));
-            if (request.getParameter("abandonado") != null && request.getParameter("abandonado").equalsIgnoreCase("on") ) {
+            if (request.getParameter("abandonado") != null && request.getParameter("abandonado").equalsIgnoreCase("on")) {
                 pacote.setAbandonado(true);
             } else {
                 pacote.setAbandonado(false);
@@ -78,8 +79,15 @@ public class CriarPacoteServlet extends HttpServlet {
             } else {
                 pacote.setDataCriacao(sdf.parse(request.getParameter("dataCriacao")));
             }
-
-            pacote.setDataPrevistaRealizacao(sdf.parse(request.getParameter("dataPrevistaRealizacao")));
+            try{
+                pacote.setDataPrevistaRealizacao(sdf.parse(request.getParameter("dataPrevistaRealizacao")));
+            }catch(ParseException pe){
+                Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, pe);
+                resposta.addItemLaudo("Data de Previsão de Realização Inválida!");
+                request.setAttribute("resposta", resposta);
+                request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
+            }
+            
 
             request = salvarDocumento(request, response);
 
@@ -88,7 +96,7 @@ public class CriarPacoteServlet extends HttpServlet {
             Usuario usuarioLogado = null;
 
             usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioLogado");
-            
+
             Projeto projetoSelecionado = new Projeto();
             projetoSelecionado.setId(1);
 //            projetoSelecionado = (Projeto) request.getSession().getAttribute("projetoSelecionado");
@@ -104,11 +112,11 @@ public class CriarPacoteServlet extends HttpServlet {
                     request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
                 }
             }
-        } catch (IOException | ParseException | ServletException ex) {
+        } catch (IOException | ServletException ex) {
+            Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, ex);
             resposta.setChave(null);
             resposta.addItemLaudo("Falha na criação do pacote");
             request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
-            Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -164,16 +172,19 @@ public class CriarPacoteServlet extends HttpServlet {
 
         FileService service = new FileService();
         String nomeCompletoDocumento;
-        Path destination = service.createFolder(BASE_DIR);
+        
+        
+        Path destination = service.createFolder( DRIVE + BASE_DIR);
+        String destinationString = destination.toString().replace(DRIVE, "");
 
-        for (Part part : request.getParts()) {
-            if (part.getName().contains("documento") && Files.exists(destination)) {
-                nomeCompletoDocumento = service.saveFile(destination, part);
-                if (nomeCompletoDocumento != null) {
-                    request.setAttribute("documento", nomeCompletoDocumento);
-                }
+        if (request.getPart("documento") != null && Files.exists(destination)) {
+            nomeCompletoDocumento = DRIVE + service.saveFile(destinationString, request.getPart("documento"));
+            if (nomeCompletoDocumento != null) {
+                request.setAttribute("documento", nomeCompletoDocumento);
             }
         }
+
+        
         if (request.getAttribute("documento") == null) {
             resposta.addItemLaudo("Documento não pode ser enviado!");
             request.setAttribute("resposta", resposta);
