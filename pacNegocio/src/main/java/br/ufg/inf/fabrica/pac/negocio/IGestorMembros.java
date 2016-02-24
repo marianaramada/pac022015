@@ -1,11 +1,10 @@
 package br.ufg.inf.fabrica.pac.negocio;
 
-import br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Projeto;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Resposta;
-import br.ufg.inf.fabrica.pac.negocio.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.dominio.MembroProjeto;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Resposta;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -14,12 +13,21 @@ import java.util.Map;
 public interface IGestorMembros {
     
     /**
+     *
+     * @param autor
+     * @param projeto
+     * @param usuarioPesquisado
+     * @return
+     */
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto, String usuarioPesquisado);
+    
+    /**
      * 
      * @param autor
      * @param projeto
      * @return 
      */
-    public Resposta<List<Usuario>> buscarUsuarios(Usuario autor, Projeto projeto);
+    public Resposta<List<MembroProjeto>> buscarMembros(Usuario autor, Projeto projeto);
     
     /**
      * 
@@ -36,4 +44,22 @@ public interface IGestorMembros {
      * @return 
      */
     public Resposta<MembroProjeto> removerMembroProjeto(Usuario autor, MembroProjeto membro);
+
+    /**
+     * 
+     * @param autor
+     * @param membros 
+     * @return  
+     */
+    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(Usuario autor, List<MembroProjeto> membros);
+
+    /**
+     * 
+     * @param autor
+     * @param papeisRemovidos
+     * @param papeisAdicionados
+     * @return 
+     */
+    public Resposta<String> atualizarPapeisDeUsuarioEmUmProjeto(Usuario autor, 
+            List<MembroProjeto> papeisRemovidos, List<MembroProjeto> papeisAdicionados);
 }

@@ -5,7 +5,16 @@
  */
 package br.ufg.inf.fabrica.pac.view.servlets;
 
+import br.ufg.inf.fabrica.pac.negocio.IGestorMembros;
+import br.ufg.inf.fabrica.pac.dominio.MembroProjeto;
+import br.ufg.inf.fabrica.pac.dominio.Papel;
+import br.ufg.inf.fabrica.pac.dominio.Projeto;
+import br.ufg.inf.fabrica.pac.dominio.Usuario;
+import br.ufg.inf.fabrica.pac.negocio.imp.GestorMembrosImpl;
+import br.ufg.inf.fabrica.pac.view.beans.BeanAtribuirEquipe;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Danillo
  */
-@WebServlet(name = "ManipuladorDePacote", urlPatterns = {"/ManipuladorDePacote"})
-public class ManipuladorDePacote extends HttpServlet {
+@WebServlet(name = "ServletAdicionarMembro", urlPatterns = {"/adicionarMembro"})
+public class ServletAdicionarMembro extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,7 +40,35 @@ public class ManipuladorDePacote extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.sendRedirect("pacoteDetalhes.jsp");
+        String[] usuarios = request.getParameterValues("nomeNaoMembro");
+        String[] papeis = request.getParameterValues("papeis");
+        
+        BeanAtribuirEquipe beanAtribuir = (BeanAtribuirEquipe) request.
+                getSession().getAttribute("beanAtribuir");
+        Usuario usuarioLogado = beanAtribuir.getUsuarioLogado();
+        Projeto projetoSelecionado = beanAtribuir.getProjetoSelecionado();
+        
+        List<MembroProjeto> membros = new ArrayList<>();
+        for (String usuario : usuarios) {
+            for (String papel : papeis) {
+                MembroProjeto membro = new MembroProjeto();
+                membro.setIdProjeto(projetoSelecionado.getId());
+                membro.setIdUsuario(Integer.parseInt(usuario));
+                membro.setPapel(papel);
+                //Somente adiciona se o papel informado estiver consistente
+                //com os papéis definidos no Enum Papel
+                try{
+                    Papel p = Papel.valueOf(papel);
+                    membros.add(membro);
+                }catch(IllegalArgumentException ex){
+                    
+                }
+            }
+        }
+        
+        IGestorMembros gestor = new GestorMembrosImpl();
+        gestor.adicionarMembrosProjeto(usuarioLogado, membros);
+        request.getRequestDispatcher("atribuirEquipe.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
