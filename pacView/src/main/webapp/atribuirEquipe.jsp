@@ -4,13 +4,13 @@
     Author     : Danillo
 --%>
 
-<%@page import="br.ufg.inf.fabrica.pac.negocio.dominio.Usuario"%>
+<%@page import="br.ufg.inf.fabrica.pac.dominio.Usuario"%>
 <%@page import="java.util.List"%>
-<%@page import="br.ufg.inf.fabrica.pac.negocio.dominio.MembroProjeto"%>
+<%@page import="br.ufg.inf.fabrica.pac.dominio.MembroProjeto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<jsp:useBean id="beanAtribuir" scope="session" class="br.ufg.inf.fabrica.pac.view.servlets.beans.BeanAtribuirEquipe" />
+<jsp:useBean id="beanAtribuir" scope="session" class="br.ufg.inf.fabrica.pac.view.beans.BeanAtribuirEquipe" />
 <jsp:setProperty name="beanAtribuir" param="usuarioPesquisado" property="usuarioPesquisado" />
 <jsp:setProperty name="beanAtribuir" param="usuarioEmAlteracao" property="usuarioEmAlteracao" />
 
@@ -39,7 +39,7 @@
                         ${usuario.nome}
                         <br/>
                         <label for="papelGPR">GPR</label>
-                        <input type="checkbox" value="GPR" name="papeis" id="papelGPR"
+                        <input type="checkbox" value="GPR" name="papeis" id="papelGPR" 
                                <c:if test="${usuario.GPR}">checked</c:if> />
                         <br/>
                         <label for="papelMEG">MEG</label>
@@ -86,7 +86,7 @@
                         <input type="checkbox" value="MEG" name="papeis"
                                id="papelMGG"/>
                         <br>
-                        <label for="papelGPR">GPR</label>
+                        <label for="papelGPR">MEM</label>
                         <input type="checkbox" value="MEM" name="papeis"
                                id="papelMEM"/>
                     </div>
