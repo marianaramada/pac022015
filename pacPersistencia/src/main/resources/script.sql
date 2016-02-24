@@ -20,6 +20,8 @@ create table PROJETO(
 create table USUARIO(
     id INTEGER NOT NULL,
     ativo BOOLEAN NOT NULL,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -55,8 +57,8 @@ create table ANDAMENTO(
 );
 
 create table MEMBRO_PROJETO(
-    id_usuario INTEGER NOT NULL,
-    id_projeto INTEGER NOT NULL,
+    idUsuario INTEGER NOT NULL,
+    idProjeto INTEGER NOT NULL,
     papel VARCHAR(100) NOT NULL,
     PRIMARY KEY (id_usuario, id_projeto, papel),
     FOREIGN KEY (id_usuario) REFERENCES USUARIO(id),

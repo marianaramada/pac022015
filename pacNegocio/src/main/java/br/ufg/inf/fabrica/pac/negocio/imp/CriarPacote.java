@@ -15,6 +15,7 @@ import br.ufg.inf.fabrica.pac.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.dominio.utils.Utils;
 import br.ufg.inf.fabrica.pac.negocio.utils.UtilsNegocio;
+import br.ufg.inf.fabrica.pac.persistencia.IDaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoEstado;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoPacote;
@@ -36,11 +37,14 @@ public class CriarPacote implements ICriarPacote {
         Resposta<Pacote> resp = new Resposta<Pacote>();
         //Verificar se o usuario pertence ao projeto e neste tem o perfil GPR .
         List<MembroProjeto> membroProjeto;
-        membroProjeto = DaoMembroProjeto.buscar(projetoSelecionado, usuarioLogado);
+        
+        IDaoMembroProjeto dao = new DaoMembroProjeto();
+                      
+        membroProjeto = dao.buscar(projetoSelecionado, usuarioLogado);
 
         if (membroProjeto != null && membroProjeto.size() > 0) {
             for (MembroProjeto mP : membroProjeto) {
-                if (!UtilsNegocio.UsuarioLogadoPossuiPapel(usuarioLogado, projetoSelecionado, Papel.GPR.getCodigo())) {
+                if (!UtilsNegocio.UsuarioLogadoPossuiPapel(usuarioLogado, projetoSelecionado, Papel.GPR.name())) {
                     resp.setChave(null);
                     resp.addItemLaudo("Usuario logado não possui permissão para criar pacotes nesse projeto!");
                     return resp;
@@ -107,5 +111,7 @@ public class CriarPacote implements ICriarPacote {
         }
         return false;
     }
+    
+
 
     }

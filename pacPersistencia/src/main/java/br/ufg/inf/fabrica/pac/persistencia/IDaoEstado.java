@@ -6,7 +6,6 @@ import br.ufg.inf.fabrica.pac.dominio.Estado;
  *
  * @author Danillo
  */
-public interface IDaoEstado extends IDao<Estado>{
-    
-    
+public interface IDaoEstado extends IDao<Estado> {
+
 }

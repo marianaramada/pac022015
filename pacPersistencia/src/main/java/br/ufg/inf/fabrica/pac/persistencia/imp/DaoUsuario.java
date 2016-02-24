@@ -17,7 +17,7 @@ public class DaoUsuario implements IDaoUsuario{
     @Override
     public Usuario salvar(Usuario entity) {
         String sqlUpdate = "update USUARIO set ativo=? where id=?";
-        String sqlInsert = "insert into USUARIO (ativo, id) values (?, ?)";
+        String sqlInsert = "insert into USUARIO (ativo, id, nome, email) values (?, ?, ?, ? )";
         try {
             PreparedStatement pst;
             Usuario u = buscar(entity.getId());
@@ -28,6 +28,8 @@ public class DaoUsuario implements IDaoUsuario{
             }
             pst.setBoolean(1, true);
             pst.setLong(2, entity.getId());
+            pst.setString(3, entity.getNome());
+            pst.setString(4, entity.getEmail());
             pst.execute();
             return entity;
         } catch (SQLException ex) {

@@ -25,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -183,7 +184,6 @@ public class CriarPacoteServlet extends HttpServlet {
                 request.setAttribute("documento", nomeCompletoDocumento);
             }
         }
-
         
         if (request.getAttribute("documento") == null) {
             resposta.addItemLaudo("Documento não pode ser enviado!");

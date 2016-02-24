@@ -135,6 +135,11 @@ public class Andamento {
     public void setUsuarioDestinatario(Usuario usuarioDestinatario) {
         this.usuarioDestinatario = usuarioDestinatario;
     }
-    
+
+        public static void main(String[] args) {
+        
+        System.out.println(Papel.GPR.name());
+        
+        }
     
 }

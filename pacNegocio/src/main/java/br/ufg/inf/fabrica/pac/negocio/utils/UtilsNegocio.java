@@ -12,6 +12,7 @@ import br.ufg.inf.fabrica.pac.dominio.Pacote;
 import br.ufg.inf.fabrica.pac.dominio.Projeto;
 import br.ufg.inf.fabrica.pac.dominio.Usuario;
 import br.ufg.inf.fabrica.pac.persistencia.IDaoAndamento;
+import br.ufg.inf.fabrica.pac.persistencia.IDaoMembroProjeto;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoAndamento;
 import br.ufg.inf.fabrica.pac.persistencia.imp.DaoMembroProjeto;
 import java.util.Date;
@@ -27,7 +28,8 @@ public class UtilsNegocio {
 
     public static boolean UsuarioLogadoPossuiPapel(Usuario user, Projeto proj, String papel) {
         List<MembroProjeto> membroProjeto;
-        membroProjeto = DaoMembroProjeto.buscar(proj, user);
+        IDaoMembroProjeto dao = new DaoMembroProjeto();
+        membroProjeto = dao.buscar(proj, user);
 
         for (MembroProjeto p : membroProjeto) {
             if (p.getPapel().equals(papel)) {

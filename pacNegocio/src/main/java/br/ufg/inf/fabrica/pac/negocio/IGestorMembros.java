@@ -13,12 +13,21 @@ import java.util.List;
 public interface IGestorMembros {
     
     /**
+     *
+     * @param autor
+     * @param projeto
+     * @param usuarioPesquisado
+     * @return
+     */
+    public Resposta<List<Usuario>> buscarUsuariosNaoMembros(Usuario autor, Projeto projeto, String usuarioPesquisado);
+    
+    /**
      * 
      * @param autor
      * @param projeto
      * @return 
      */
-    public Resposta<List<Usuario>> buscarUsuarios(Usuario autor, Projeto projeto);
+    public Resposta<List<MembroProjeto>> buscarMembros(Usuario autor, Projeto projeto);
     
     /**
      * 
@@ -35,4 +44,22 @@ public interface IGestorMembros {
      * @return 
      */
     public Resposta<MembroProjeto> removerMembroProjeto(Usuario autor, MembroProjeto membro);
+
+    /**
+     * 
+     * @param autor
+     * @param membros 
+     * @return  
+     */
+    public Resposta<List<MembroProjeto>> adicionarMembrosProjeto(Usuario autor, List<MembroProjeto> membros);
+
+    /**
+     * 
+     * @param autor
+     * @param papeisRemovidos
+     * @param papeisAdicionados
+     * @return 
+     */
+    public Resposta<String> atualizarPapeisDeUsuarioEmUmProjeto(Usuario autor, 
+            List<MembroProjeto> papeisRemovidos, List<MembroProjeto> papeisAdicionados);
 }
