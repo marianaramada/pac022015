@@ -13,7 +13,7 @@ public class MembroProjeto {
     //Transient
     private Usuario usuario;
     private Projeto projeto;
-    private Papel papel_entity;
+    private PapelProjeto papel_entity;
 
     public long getIdUsuario() {
         return idUsuario;
@@ -55,11 +55,11 @@ public class MembroProjeto {
         this.papel = papel;
     }
 
-    public Papel getPapel_entity() {
+    public PapelProjeto getPapel_entity() {
         return papel_entity;
     }
 
-    public void setPapel_entity(Papel papel_entity) {
+    public void setPapel_entity(PapelProjeto papel_entity) {
         this.papel_entity = papel_entity;
     }
 
