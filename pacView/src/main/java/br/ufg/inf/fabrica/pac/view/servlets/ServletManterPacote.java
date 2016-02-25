@@ -20,20 +20,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author auf
  */
-@WebServlet(name = "CriarPacoteServlet", urlPatterns = {"/CriarPacote"})
+@WebServlet(name = "CriarPacoteServlet", urlPatterns = {"/manterPacote"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024, // 1MB
         maxFileSize = 1024 * 1024 * 10, // 10MB
         maxRequestSize = 1024 * 1024 * 10,// 10MB
         location = "C://"
 )
-public class ServletCriarPacote extends HttpServlet {
+public class ServletManterPacote extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -78,7 +77,7 @@ public class ServletCriarPacote extends HttpServlet {
             try{
                 pacote.setDataPrevistaRealizacao(sdf.parse(request.getParameter("dataPrevistaRealizacao")));
             }catch(ParseException pe){
-                Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, pe);
+                Logger.getLogger(ServletManterPacote.class.getName()).log(Level.SEVERE, null, pe);
                 resposta.addItemLaudo("Data de Previsão de Realização Inválida!");
                 request.setAttribute("resposta", resposta);
                 request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
@@ -109,7 +108,7 @@ public class ServletCriarPacote extends HttpServlet {
                 }
             }
         } catch (IOException | ServletException ex) {
-            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletManterPacote.class.getName()).log(Level.SEVERE, null, ex);
             resposta.setChave(null);
             resposta.addItemLaudo("Falha na criação do pacote");
             request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
@@ -132,7 +131,7 @@ public class ServletCriarPacote extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletManterPacote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -150,7 +149,7 @@ public class ServletCriarPacote extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletManterPacote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
