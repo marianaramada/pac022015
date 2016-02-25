@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufg.inf.fabrica.pac.view.servlets;
 
 import br.ufg.inf.fabrica.pac.negocio.ICriarPacote;
@@ -38,7 +33,7 @@ import javax.servlet.http.Part;
         maxRequestSize = 1024 * 1024 * 10,// 10MB
         location = "C://"
 )
-public class CriarPacoteServlet extends HttpServlet {
+public class ServletCriarPacote extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -83,7 +78,7 @@ public class CriarPacoteServlet extends HttpServlet {
             try{
                 pacote.setDataPrevistaRealizacao(sdf.parse(request.getParameter("dataPrevistaRealizacao")));
             }catch(ParseException pe){
-                Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, pe);
+                Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, pe);
                 resposta.addItemLaudo("Data de Previsão de Realização Inválida!");
                 request.setAttribute("resposta", resposta);
                 request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
@@ -104,7 +99,7 @@ public class CriarPacoteServlet extends HttpServlet {
             ICriarPacote cp = new CriarPacote();
 
             if (ehNovoPacote) {
-                resposta = cp.criarPacote(pacote, usuarioLogado, projetoSelecionado);
+                resposta = cp.criarPacote(usuarioLogado, pacote, projetoSelecionado);
                 if (resposta.getChave() != null) {
                     request.setAttribute("resposta", resposta);
                     request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
@@ -114,7 +109,7 @@ public class CriarPacoteServlet extends HttpServlet {
                 }
             }
         } catch (IOException | ServletException ex) {
-            Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
             resposta.setChave(null);
             resposta.addItemLaudo("Falha na criação do pacote");
             request.getRequestDispatcher("criarPacote.jsp").forward(request, response);
@@ -137,7 +132,7 @@ public class CriarPacoteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -155,7 +150,7 @@ public class CriarPacoteServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ParseException ex) {
-            Logger.getLogger(CriarPacoteServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServletCriarPacote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
