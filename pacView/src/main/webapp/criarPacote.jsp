@@ -20,7 +20,7 @@
         </c:forEach>            
 
         <hr>
-        <form action="CriarPacote" method="post" style="width: 1000px" enctype="multipart/form-data">
+        <form action="manterPacote" method="post" style="width: 1000px" enctype="multipart/form-data">
             Nome: <br/> <input style="width:500px " id="nomePacote" title="Nome:" type="text" name="nomePacote" placeholder="Insira um nome que identifique o pacote" tabindex="1" required="true" > <br/><br/>
 
             Descrição: <br/> <input style="width:500px"id="descricaoPacote" title="Descrição:" type="text" name="descricaoPacote" placeholder="Descreve detalhes da atividade a ser desenvolvida no pacote" tabindex="2" required="true"> <br/><br/>

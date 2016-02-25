@@ -1,15 +1,10 @@
 package br.ufg.inf.fabrica.pac.negocio.imp;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import br.ufg.inf.fabrica.pac.negocio.ICriarPacote;
 import br.ufg.inf.fabrica.pac.dominio.Estado;
 import br.ufg.inf.fabrica.pac.dominio.MembroProjeto;
 import br.ufg.inf.fabrica.pac.dominio.Pacote;
-import br.ufg.inf.fabrica.pac.dominio.Papel;
+import br.ufg.inf.fabrica.pac.dominio.PapelProjeto;
 import br.ufg.inf.fabrica.pac.dominio.Projeto;
 import br.ufg.inf.fabrica.pac.dominio.Resposta;
 import br.ufg.inf.fabrica.pac.dominio.Usuario;
@@ -33,18 +28,18 @@ import java.util.logging.Logger;
 public class CriarPacote implements ICriarPacote {
 
     @Override
-    public Resposta<Pacote> criarPacote(Pacote pacote, Usuario usuarioLogado, Projeto projetoSelecionado) {
+    public Resposta<Pacote> criarPacote(Usuario autor, Pacote pacote, Projeto projetoSelecionado) {
         Resposta<Pacote> resp = new Resposta<Pacote>();
         //Verificar se o usuario pertence ao projeto e neste tem o perfil GPR .
         List<MembroProjeto> membroProjeto;
-        
+
         IDaoMembroProjeto dao = new DaoMembroProjeto();
-                      
-        membroProjeto = dao.buscar(projetoSelecionado, usuarioLogado);
+
+        membroProjeto = dao.buscar(projetoSelecionado, autor);
 
         if (membroProjeto != null && membroProjeto.size() > 0) {
             for (MembroProjeto mP : membroProjeto) {
-                if (!UtilsNegocio.UsuarioLogadoPossuiPapel(usuarioLogado, projetoSelecionado, Papel.GPR.name())) {
+                if (!UtilsNegocio.UsuarioLogadoPossuiPapel(autor, projetoSelecionado, PapelProjeto.GPR.name())) {
                     resp.setChave(null);
                     resp.addItemLaudo("Usuario logado não possui permissão para criar pacotes nesse projeto!");
                     return resp;
@@ -55,7 +50,7 @@ public class CriarPacote implements ICriarPacote {
             resp.addItemLaudo("Usuario logado não possui permissão para criar pacotes nesse projeto!");
             return resp;
         }
-        
+
         String hojeString = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         Date hoje = null;
         try {
@@ -63,13 +58,13 @@ public class CriarPacote implements ICriarPacote {
         } catch (ParseException ex) {
             Logger.getLogger(CriarPacote.class.getName()).log(Level.SEVERE, null, ex);
         }
-                        
+
         if (pacoteTemCampoVazio(pacote)) {
             resp.setChave(null);
             resp.addItemLaudo("Pacote com campos vazios!");
             return resp;
         }
-        if (hoje==null || pacote.getDataPrevistaRealizacao().compareTo(hoje) < 0) {
+        if (hoje == null || pacote.getDataPrevistaRealizacao().compareTo(hoje) < 0) {
             resp.setChave(null);
             resp.addItemLaudo("Data Prevista Realização deve ser maior ou igual a data atual!");
             return resp;
@@ -81,12 +76,12 @@ public class CriarPacote implements ICriarPacote {
 
         Estado estado = DaoEstado.buscarPorNome("novo");
         pacote.setIdEstado(estado.getId());
-        pacote.setIdUsuario(usuarioLogado.getId());
+        pacote.setIdUsuario(autor.getId());
         DaoPacote pacoteDao = new DaoPacote();
         try {
             pacote = pacoteDao.salvar(pacote);
             //criar o andamento
-            if (UtilsNegocio.criarAndamentoPacote(pacote, usuarioLogado, estado, projetoSelecionado, usuarioLogado) == null) {
+            if (UtilsNegocio.criarAndamentoPacote(pacote, autor, estado, projetoSelecionado, autor) == null) {
                 //Caso não seja possível criar o Andamento, o pacote será apagado, pois não pode existir pacote sem andamento
                 pacoteDao.excluir(pacote);
                 resp.setChave(null);
@@ -111,7 +106,5 @@ public class CriarPacote implements ICriarPacote {
         }
         return false;
     }
-    
 
-
-    }
+}

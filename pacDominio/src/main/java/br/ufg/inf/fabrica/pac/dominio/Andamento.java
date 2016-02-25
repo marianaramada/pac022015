@@ -138,7 +138,7 @@ public class Andamento {
 
         public static void main(String[] args) {
         
-        System.out.println(Papel.GPR.name());
+        System.out.println(PapelProjeto.GPR.name());
         
         }
     
